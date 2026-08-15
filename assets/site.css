@@ -175,10 +175,6 @@ h3 {
   border-radius: var(--r-sm);
 }
 
-.hidden {
-  display: none !important;
-}
-
 /* ---------------------------------------------------------------- layout */
 
 .shell {
@@ -329,6 +325,19 @@ h3 {
   background: var(--surface);
 }
 
+/* ...but inside a card the surrounding surface IS --surface, so the rule above
+   painted the button the same colour as the card and it vanished. Same
+   specificity, declared later, so this wins where it applies. */
+.card .btn-tonal,
+.plan .btn-tonal {
+  background: var(--muted);
+}
+
+.card .btn-tonal:hover:not(:disabled),
+.plan .btn-tonal:hover:not(:disabled) {
+  background: var(--sunken);
+}
+
 .btn-sm {
   min-height: 38px;
   padding: 0 var(--s4);
@@ -343,20 +352,6 @@ h3 {
   background: var(--sunken);
   color: var(--ink-3);
   cursor: not-allowed;
-}
-
-.link-btn {
-  background: none;
-  border: 0;
-  padding: 0;
-  color: var(--accent);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.link-btn:hover {
-  color: var(--accent-hover);
 }
 
 /* ----------------------------------------------------------------- cards */
@@ -680,210 +675,6 @@ h3 {
   padding-top: var(--s6);
 }
 
-/* --------------------------------------------------------------- fields */
-
-.field-label {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink-2);
-  margin-bottom: var(--s2);
-}
-
-.field + .field {
-  margin-top: var(--s4);
-}
-
-/* Filled well, no resting outline — matches inputDecorationTheme in the app. */
-.input {
-  width: 100%;
-  min-height: 46px;
-  padding: 0 var(--s4);
-  background: var(--muted);
-  border: 1.5px solid transparent;
-  border-radius: var(--r-md);
-  font-size: 0.95rem;
-}
-
-.input::placeholder {
-  color: var(--ink-3);
-}
-
-.input:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--surface);
-}
-
-.stepper {
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-  background: var(--muted);
-  border-radius: var(--r-md);
-  padding: var(--s1);
-}
-
-.stepper button {
-  width: 40px;
-  height: 40px;
-  flex: none;
-  border: 0;
-  border-radius: var(--r-sm);
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 1.2rem;
-  line-height: 1;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  box-shadow: var(--shadow);
-  transition: color 0.15s ease;
-}
-
-.stepper button:hover:not(:disabled) {
-  color: var(--accent);
-}
-
-.stepper button:disabled {
-  background: transparent;
-  box-shadow: none;
-  color: var(--ink-3);
-  cursor: not-allowed;
-}
-
-.stepper output {
-  flex: 1;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.total-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s4);
-  margin-top: var(--s3);
-  padding: var(--s3) var(--s4);
-  background: var(--muted);
-  border-radius: var(--r-md);
-  font-size: 0.88rem;
-  color: var(--ink-2);
-}
-
-.total-row strong {
-  font-size: 1.05rem;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.status {
-  margin-top: var(--s3);
-  font-size: 0.88rem;
-  color: var(--ink-2);
-  padding: var(--s3) var(--s4);
-  background: var(--muted);
-  border-radius: var(--r-md);
-}
-
-.status.is-error {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.status.is-ok {
-  background: var(--success-soft);
-  color: var(--success);
-}
-
-/* ----------------------------------------------------------------- modal */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  padding: var(--s5);
-  background: var(--scrim);
-  backdrop-filter: blur(2px);
-}
-
-.modal-box {
-  width: min(430px, 100%);
-  background: var(--surface);
-  border-radius: var(--r-xl);
-  padding: var(--s8);
-  box-shadow: var(--shadow-lg);
-  max-height: 88vh;
-  overflow-y: auto;
-}
-
-.modal-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--s4);
-}
-
-.modal-head h3 {
-  font-size: 1.25rem;
-}
-
-.icon-btn {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  margin: -4px -6px 0 0;
-  border: 0;
-  border-radius: var(--r-sm);
-  background: none;
-  color: var(--ink-3);
-  font-size: 1.3rem;
-  line-height: 1;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-}
-
-.icon-btn:hover {
-  background: var(--muted);
-  color: var(--ink);
-}
-
-.modal-sub {
-  margin-top: var(--s2);
-  color: var(--ink-2);
-  font-size: 0.92rem;
-}
-
-.modal-foot {
-  margin-top: var(--s5);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s4);
-  flex-wrap: wrap;
-}
-
-/* ------------------------------------------------------------ accountbar */
-
-.account-bar {
-  background: var(--muted);
-}
-
-.account-bar .shell {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--s4);
-  padding-block: var(--s2);
-  font-size: 0.85rem;
-  color: var(--ink-2);
-}
-
 /* ---------------------------------------------------------------- footer */
 
 .site-footer {
@@ -945,63 +736,100 @@ h3 {
   }
 }
 
-/* Preview-mode banner, shown only when the page is opened from disk. */
-.notice-bar {
-  background: var(--accent-soft);
-  color: var(--ink);
-  font-size: 0.87rem;
-  line-height: 1.55;
-  padding: var(--s3) var(--s5);
-  text-align: center;
+/* ------------------------------------------------------------- downloads */
+
+.downloads {
+  display: grid;
+  gap: var(--s3);
+  grid-template-columns: 1fr;
 }
 
-.notice-bar code {
+@media (min-width: 640px) {
+  .downloads {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 980px) {
+  .downloads {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* One rule for both states: an <a class="dl"> is a live download, a
+   <span class="dl"> is one that has not shipped yet. */
+.dl {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
   background: var(--surface);
-  border-radius: 6px;
-  padding: 1px 6px;
-  font-size: 0.85em;
-  white-space: nowrap;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Numbered steps inside the "subscribe in the app" modal. */
-.app-steps {
-  margin: var(--s6) 0 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: appstep;
-  display: grid;
-  gap: var(--s3);
+a.dl:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
-/* The text sits in a single <span>: with the inline <strong>s as direct
-   children the grid treated each one as its own item and broke the sentence
-   across rows. */
-.app-steps li {
-  counter-increment: appstep;
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  gap: var(--s3);
-  align-items: start;
-  font-size: 0.93rem;
-  line-height: 1.5;
-  color: var(--ink-2);
+.dl[aria-disabled='true'] {
+  box-shadow: none;
+  background: transparent;
+  outline: 1.5px dashed var(--hairline);
+  outline-offset: -1.5px;
+  color: var(--ink-3);
 }
 
-.app-steps li::before {
-  content: counter(appstep);
-  margin-top: 1px;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--r-pill);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 0.78rem;
-  font-weight: 700;
+.dl-icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
   display: grid;
   place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
-.app-steps strong {
-  color: var(--ink);
+.dl[aria-disabled='true'] .dl-icon {
+  background: var(--muted);
+  color: var(--ink-3);
+}
+
+.dl-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.dl-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dl-text strong {
+  font-size: 0.97rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.dl-text small {
+  font-size: 0.83rem;
+  color: var(--ink-3);
+}
+
+.dl-soon {
+  margin-left: auto;
+  flex: none;
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  background: var(--muted);
+  padding: var(--s1) var(--s3);
+  border-radius: var(--r-pill);
 }
