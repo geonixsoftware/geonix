@@ -93,9 +93,8 @@
     box-shadow: var(--shadow-lg), inset 0 0 0 1.5px rgba(236, 116, 64, 0.4);
   }
 
-  .flag {
-    color: #f0a17c;
-  }
+  /* .flag deliberately NOT overridden here: it sits on the white PDF mock,
+     which stays light in dark mode. */
 }
 
 /* ----------------------------------------------------------------- reset */
@@ -247,9 +246,52 @@ h3 {
   height: 64px;
 }
 
-.site-header img {
-  height: 22px;
+/* The two marks have different aspect ratios (the Wrench lockup carries a
+   second line), so they are sized individually to sit on the same baseline
+   rather than by one blanket height. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.15s ease;
+}
+
+.brand:hover {
+  opacity: 0.7;
+}
+
+.brand img {
   width: auto;
+  display: block;
+}
+
+.brand-wrench {
+  height: 26px;
+}
+
+.brand-geonix {
+  height: 17px;
+}
+
+.brand-pair {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  min-width: 0;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--hairline);
+  flex: none;
+}
+
+/* On a narrow screen the company mark yields to the product it belongs to. */
+@media (max-width: 480px) {
+  .brand-divider,
+  .brand-pair .brand-geonix {
+    display: none;
+  }
 }
 
 .nav {
@@ -436,10 +478,26 @@ h3 {
   font-size: 0.87rem;
 }
 
+
+/* --------------------------------------------------------------- jobcard */
+
+/* Deliberately theme-independent: this is a mock of the generated PDF, and the
+   PDF is white paper with a navy accent (BRAND_COLOR in pdf_generator.py).
+   It used to follow --surface, so in dark mode it showed as a black "PDF". */
+.jobcard {
+  --paper: #ffffff;
+  --paper-ink: #1b1a18;
+  --paper-ink-2: #6b655d;
+  --paper-ink-3: #9b958c;
+  --paper-line: #e8e5e0;
+  --paper-navy: #1f3a5f;
+}
+
 /* --------------------------------------------------------- job card demo */
 
 .jobcard {
-  background: var(--surface);
+  background: var(--paper);
+  color: var(--paper-ink);
   border-radius: var(--r-xl);
   padding: var(--s6);
   box-shadow: var(--shadow-lg);
@@ -451,17 +509,17 @@ h3 {
   justify-content: space-between;
   gap: var(--s4);
   padding-bottom: var(--s4);
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--paper-line);
 }
 
 .jobcard-id {
   font-size: 0.8rem;
-  color: var(--ink-3);
+  color: var(--paper-ink-3);
 }
 
 .jobcard-row {
   padding-block: var(--s4);
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--paper-line);
 }
 
 .jobcard-row:last-of-type {
@@ -470,16 +528,16 @@ h3 {
 
 .jobcard-label {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--paper-navy);
   margin-bottom: var(--s1);
 }
 
 .jobcard-value {
   font-size: 0.95rem;
-  color: var(--ink);
+  color: var(--paper-ink);
 }
 
 .jobcard-line {
@@ -493,12 +551,12 @@ h3 {
 
 .jobcard-line span:last-child {
   font-variant-numeric: tabular-nums;
-  color: var(--ink-2);
+  color: var(--paper-ink-2);
 }
 
 .flag {
   margin-top: var(--s4);
-  background: var(--accent-soft);
+  background: #fdf1e8;
   border-radius: var(--r-md);
   padding: var(--s3) var(--s4);
   font-size: 0.86rem;
@@ -515,8 +573,8 @@ h3 {
   border-radius: var(--r-pill);
   font-size: 0.76rem;
   font-weight: 600;
-  background: var(--success-soft);
-  color: var(--success);
+  background: #e7f1ec;
+  color: #2c7a57;
 }
 
 .pill::before {
