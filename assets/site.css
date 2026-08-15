@@ -34,7 +34,6 @@
   --r-md: 14px;
   --r-lg: 20px;
   --r-xl: 26px;
-  --r-pill: 999px;
 
   /* 4-point spacing scale, mirroring AppTheme. */
   --s1: 4px;
@@ -199,18 +198,6 @@ h3 {
   margin-top: var(--s3);
   color: var(--ink-2);
   font-size: 1.02rem;
-}
-
-.eyebrow {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--accent);
-  background: var(--accent-soft);
-  padding: var(--s1) var(--s3);
-  border-radius: var(--r-pill);
-  margin-bottom: var(--s4);
 }
 
 .lede {
@@ -396,6 +383,19 @@ h3 {
   cursor: not-allowed;
 }
 
+/* Bare icon rather than a tinted rounded chip — the badge was decoration and
+   read as boilerplate. */
+.card-icon {
+  display: block;
+  color: var(--accent);
+  margin-bottom: var(--s4);
+}
+
+.card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
 /* ----------------------------------------------------------------- cards */
 
 .card {
@@ -424,22 +424,6 @@ h3 {
   .grid-3 {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-
-.icon-chip {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--r-md);
-  background: var(--accent-soft);
-  color: var(--accent);
-  display: grid;
-  place-items: center;
-  margin-bottom: var(--s4);
-}
-
-.icon-chip svg {
-  width: 20px;
-  height: 20px;
 }
 
 /* ------------------------------------------------------------------ hero */
@@ -477,7 +461,6 @@ h3 {
   color: var(--ink-3);
   font-size: 0.87rem;
 }
-
 
 /* --------------------------------------------------------------- jobcard */
 
@@ -565,26 +548,6 @@ h3 {
   gap: var(--s2);
 }
 
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s2);
-  padding: var(--s1) var(--s3);
-  border-radius: var(--r-pill);
-  font-size: 0.76rem;
-  font-weight: 600;
-  background: #e7f1ec;
-  color: #2c7a57;
-}
-
-.pill::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
 /* ----------------------------------------------------------------- steps */
 
 .steps {
@@ -609,17 +572,13 @@ h3 {
 
 .step::before {
   counter-increment: step;
-  content: counter(step);
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--r-pill);
-  background: var(--accent-soft);
+  content: counter(step, decimal-leading-zero);
+  display: block;
   color: var(--accent);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  margin-bottom: var(--s4);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--s3);
 }
 
 .step p {
@@ -667,15 +626,6 @@ h3 {
   justify-content: space-between;
   gap: var(--s4);
   min-height: 30px;
-}
-
-.tag {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: var(--s1) var(--s3);
-  border-radius: var(--r-pill);
-  background: var(--accent-soft);
-  color: var(--accent);
 }
 
 .plan-sub {
@@ -841,25 +791,21 @@ a.dl:hover {
   color: var(--ink-3);
 }
 
+/* Bare glyph, no tinted container — matches .card-icon. */
 .dl-icon {
   flex: none;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-md);
   display: grid;
   place-items: center;
-  background: var(--accent-soft);
   color: var(--accent);
 }
 
 .dl[aria-disabled='true'] .dl-icon {
-  background: var(--muted);
   color: var(--ink-3);
 }
 
 .dl-icon svg {
-  width: 21px;
-  height: 21px;
+  width: 22px;
+  height: 22px;
 }
 
 .dl-text {
@@ -883,11 +829,6 @@ a.dl:hover {
   margin-left: auto;
   flex: none;
   font-style: normal;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: 0.78rem;
   color: var(--ink-3);
-  background: var(--muted);
-  padding: var(--s1) var(--s3);
-  border-radius: var(--r-pill);
 }
