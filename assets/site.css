@@ -426,6 +426,23 @@ h3 {
   }
 }
 
+/* The one product card on the home page. Previously inline-styled, which
+   outranked the mobile padding rule and left it inset deeper than every other
+   card on the page. */
+.product-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s6);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s8);
+}
+
+.product-card-body {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
 /* ------------------------------------------------------------------ hero */
 
 .hero {
@@ -831,4 +848,91 @@ a.dl:hover {
   font-style: normal;
   font-size: 0.78rem;
   color: var(--ink-3);
+}
+
+/* ---------------------------------------------------------------- mobile */
+
+@media (max-width: 640px) {
+  /* Desktop uses three different card insets (24 / 24 / 32). Stacked in a
+     single column that reads as three different left margins as you scroll,
+     so on a phone they all share one. */
+  .card,
+  .step,
+  .plan,
+  .jobcard,
+  .product-card {
+    padding: var(--s5);
+  }
+
+  .product-card {
+    gap: var(--s5);
+  }
+
+  .product-card .btn {
+    width: 100%;
+  }
+
+  /* Likewise two different stack gaps (16 and 24) become one rhythm. */
+  .grid,
+  .steps,
+  .pricing,
+  .downloads {
+    gap: var(--s3);
+  }
+
+  /* Sections can breathe on a wide screen; on a phone that same air is just
+     scrolling. */
+  .section {
+    padding-block: clamp(2.75rem, 9vw, 3.5rem);
+  }
+
+  .section-head {
+    margin-bottom: var(--s6);
+  }
+
+  /* Reserved height that keeps the two plan cards' prices on one line side by
+     side. Stacked, it is only empty space. */
+  .plan-sub {
+    min-height: 0;
+  }
+
+  .price {
+    margin-top: var(--s5);
+  }
+
+  .price strong {
+    font-size: 2.25rem;
+  }
+
+  .plan-features {
+    margin-top: var(--s5);
+  }
+
+  .plan-foot {
+    padding-top: var(--s5);
+  }
+
+  .dl {
+    padding: var(--s4);
+    gap: var(--s3);
+  }
+
+  /* Full-width stacked CTAs: side by side they wrap unevenly on the narrowest
+     phones, leaving one button orphaned on its own row. */
+  .hero-actions {
+    gap: var(--s2);
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .hero-grid {
+    gap: var(--s8);
+  }
+
+  .site-footer .shell {
+    justify-content: flex-start;
+    gap: var(--s2);
+  }
 }
