@@ -273,11 +273,38 @@ h3 {
   flex: none;
 }
 
-/* On a narrow screen the company mark yields to the product it belongs to. */
-@media (max-width: 480px) {
-  .brand-divider,
-  .brand-pair .brand-geonix {
-    display: none;
+/* Both marks stay on phones. They are scaled down instead of one being
+   dropped, because at 320px the full-size pair plus the Download button
+   overruns the header. */
+@media (max-width: 560px) {
+  .brand-pair {
+    gap: var(--s3);
+  }
+
+  .brand-wrench {
+    height: 21px;
+  }
+
+  .brand-geonix {
+    height: 14px;
+  }
+
+  .brand-divider {
+    height: 17px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-pair {
+    gap: var(--s2);
+  }
+
+  .brand-wrench {
+    height: 19px;
+  }
+
+  .brand-geonix {
+    height: 12px;
   }
 }
 
