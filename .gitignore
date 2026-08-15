@@ -1,0 +1,7 @@
+# Firebase CLI deploy cache
+.firebase/
+
+# The Firebase *web* config (assets/firebase-config.js) is intentionally NOT
+# ignored: those values are public identifiers, not secrets. They already ship
+# inside every app build, and the site needs them for sign-in to work when
+# served from GitHub Pages.
