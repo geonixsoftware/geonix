@@ -467,32 +467,6 @@ h3 {
   cursor: not-allowed;
 }
 
-/* ------------------------------------------------------------ icon tiles */
-
-/* Rounded-square tile, lifted from the reference grids. Espresso-toned by
-   default so a row of them reads as information, not as three CTAs. */
-.icon-tile {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
-  background: var(--secondary-soft);
-  color: var(--secondary);
-  margin-bottom: var(--s5);
-  flex: none;
-}
-
-.icon-tile svg {
-  width: 22px;
-  height: 22px;
-}
-
-.icon-tile-accent {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
 /* ----------------------------------------------------------------- chips */
 
 .chip {
@@ -642,73 +616,6 @@ h3 {
   margin-top: var(--s6);
 }
 
-/* --------------------------------------------------- job card mock stack */
-
-/* A small layered composition rather than one flat card: the reference hero
-   stacks its artwork, and a single centred rectangle beside a headline reads
-   as a placeholder. */
-.mock-stack {
-  position: relative;
-  padding-bottom: var(--s10);
-}
-
-.mock-float {
-  position: absolute;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: var(--s3);
-  padding: var(--s3) var(--s5);
-  background: var(--surface);
-  border-radius: var(--r-md);
-  box-shadow: var(--shadow-float);
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-.mock-float span:first-child {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 9px;
-  flex: none;
-}
-
-.mock-float svg {
-  width: 15px;
-  height: 15px;
-}
-
-.mock-float-tr {
-  top: calc(var(--s6) * -1);
-  right: calc(var(--s5) * -1);
-}
-
-.mock-float-bl {
-  bottom: 0;
-  left: calc(var(--s5) * -1);
-}
-
-/* Off-canvas on a phone, where there is no side margin to float into. */
-@media (max-width: 680px) {
-  .mock-float-tr {
-    right: 0;
-    top: calc(var(--s5) * -1);
-  }
-
-  .mock-float-bl {
-    left: 0;
-  }
-
-  .mock-float {
-    font-size: 0.78rem;
-    padding: var(--s2) var(--s4);
-  }
-}
-
 /* --------------------------------------------------------- job card demo */
 
 /* Deliberately theme-independent: this is a mock of the generated PDF, and the
@@ -820,22 +727,18 @@ h3 {
   box-shadow: var(--shadow);
 }
 
-/* A numbered tile rather than a bare numeral — same shape language as
-   .icon-tile, so the two never look like different systems. */
+/* Set as a numeral rather than a filled tile. The tile version matched the
+   icon tiles that used to sit on the cards above, and with those gone a
+   coloured rounded square holding a "01" is just a sticker. */
 .step::before {
   counter-increment: step;
   content: counter(step, decimal-leading-zero);
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
-  background: var(--accent-soft);
+  display: block;
   color: var(--accent);
-  font-size: 0.95rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: 0;
-  margin-bottom: var(--s5);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--s4);
 }
 
 .step p {
@@ -988,14 +891,20 @@ h3 {
   box-shadow: var(--shadow-lg);
 }
 
-.badge-round {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  margin: 0 auto var(--s6);
-  font-size: 1.5rem;
+/* Success and cancel used to be told apart by a big round tick / cross badge.
+   A word does the same job without the sticker look, so the state is carried
+   by a small label above the headline instead. */
+.status-line {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: var(--s3);
+}
+
+.status-ok {
+  color: var(--success);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1055,29 +964,6 @@ a.dl:hover {
   outline: 1.5px dashed var(--hairline);
   outline-offset: -1.5px;
   color: var(--ink-3);
-}
-
-.dl-icon {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  background: var(--secondary-soft);
-  color: var(--secondary);
-}
-
-/* --sunken, not --muted: the downloads section IS --muted, so a muted tile on
-   it was the same colour as its background and the glyph floated untiled. */
-.dl[aria-disabled='true'] .dl-icon {
-  background: var(--sunken);
-  color: var(--ink-3);
-}
-
-.dl-icon svg {
-  width: 20px;
-  height: 20px;
 }
 
 .dl-text {
@@ -1191,14 +1077,6 @@ a.dl:hover {
 
   .hero-grid {
     gap: var(--s10);
-  }
-
-  .icon-tile,
-  .step::before {
-    width: 42px;
-    height: 42px;
-    border-radius: 14px;
-    margin-bottom: var(--s4);
   }
 
   .site-footer .shell {
