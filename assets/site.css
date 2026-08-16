@@ -1,39 +1,65 @@
 /* Geonix Software — site styles.
-   Same design system as the app (lib/core/theme): tonal surfaces instead of
-   drawn borders, one rounding scale, one soft shadow, two muted ink tones. */
+
+   Same design system as the app (lib/core/theme). Three ideas carry it:
+
+   * **Block and sheet.** The page opens on a near-black block that holds the
+     header and the headline; the content rides underneath it on a light sheet
+     with a hard top radius. Sections are then tone-blocked rather than ruled
+     off.
+   * **Backgrounds are neutral.** Canvas, surfaces and the block are black /
+     grey / white, so no large area carries hue.
+   * **Details carry the colour.** Headings, buttons, icon tiles and chips
+     come from the "Mellow Espresso / Soft Ecru" ramp:
+       #3B2A25 deep espresso · #6F4C3E mellow espresso · #BFAFA0 taupe
+       #EAE1D6 soft ecru     · #C9531F burnt orange
+*/
 
 /* ---------------------------------------------------------------- tokens */
 
 :root {
-  /* Surfaces step by tone, not by outline. */
-  --canvas: #faf9f7;
+  --canvas: #f6f6f6;
   --surface: #ffffff;
-  --muted: #f3f1ed;
-  --sunken: #efede8;
-  --hairline: #e9e6e1;
+  --muted: #f0f0f0;
+  --sunken: #e8e8e8;
+  --hairline: #e0e0e0;
 
-  --ink: #1b1a18;
-  --ink-2: #6b655d;
-  --ink-3: #9b958c;
+  /* Headings are espresso; running copy is neutral grey. */
+  --ink: #3b2a25;
+  --ink-2: #5c5c5c;
+  --ink-3: #8c8c8c;
 
   --accent: #c9531f;
-  --accent-hover: #b1471a;
-  --accent-soft: #faede5;
+  --accent-hover: #b0471a;
+  --accent-soft: #f6e4d8;
   --on-accent: #ffffff;
 
-  --success: #2c7a57;
-  --success-soft: #e7f1ec;
-  --danger: #b63a2e;
-  --danger-soft: #faeae8;
+  --secondary: #6f4c3e;
+  --secondary-soft: #ede4de;
+
+  /* The full-bleed block. Neutral near-black, so the espresso and orange
+     details sitting on it are the only colour in view. */
+  --block: #1a1a1a;
+  --block-raised: #262626;
+  --on-block: #fafafa;
+  /* Taupe — the one warm detail on the neutral block. */
+  --on-block-muted: #bfafa0;
+
+  --success: #3e7a5c;
+  --success-soft: #e4efe9;
+  --danger: #a83e2c;
+  --danger-soft: #f7e5e1;
 
   /* One shadow, two layers: contact + ambient. No heavy drops anywhere. */
-  --shadow: 0 1px 2px rgba(27, 26, 24, 0.05), 0 8px 24px -12px rgba(27, 26, 24, 0.12);
-  --shadow-lg: 0 2px 4px rgba(27, 26, 24, 0.05), 0 24px 48px -20px rgba(27, 26, 24, 0.18);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px -12px rgba(0, 0, 0, 0.14);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.06), 0 24px 48px -20px rgba(0, 0, 0, 0.2);
+  --shadow-float: 0 4px 8px rgba(0, 0, 0, 0.06), 0 40px 80px -32px rgba(0, 0, 0, 0.28);
 
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 26px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-sheet: 40px;
+  --r-pill: 999px;
 
   /* 4-point spacing scale, mirroring AppTheme. */
   --s1: 4px;
@@ -45,55 +71,52 @@
   --s8: 32px;
   --s10: 40px;
   --s12: 56px;
+  --s16: 72px;
 
-  --shell: min(1080px, 100% - 2.5rem);
+  --shell: min(1120px, 100% - 2.5rem);
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     sans-serif;
-
-  --header-bg: rgba(250, 249, 247, 0.85);
-  --scrim: rgba(27, 26, 24, 0.32);
 }
 
 /* Dark mode. Same values as AppPalette.dark in the app, so the two surfaces
    stay in step. Only the tokens are redefined — no component rules change. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --canvas: #141317;
-    --surface: #1d1c21;
-    --muted: #26252b;
-    --sunken: #2b2a31;
-    --hairline: #302f37;
+    --canvas: #121212;
+    --surface: #1c1c1c;
+    --muted: #262626;
+    --sunken: #303030;
+    --hairline: #343434;
 
-    --ink: #f4f2ef;
-    --ink-2: #a8a3ad;
-    --ink-3: #77727e;
+    --ink: #f5f3f1;
+    --ink-2: #ababab;
+    --ink-3: #757575;
 
     /* Lifted accent: the light-mode orange does not carry enough contrast
        against a dark surface. */
-    --accent: #ec7440;
-    --accent-hover: #f28a5d;
-    --accent-soft: #33241c;
-    --on-accent: #1b1008;
+    --accent: #e07e4a;
+    --accent-hover: #ec9264;
+    --accent-soft: #33231a;
+    --on-accent: #241209;
 
-    --success: #5fbb8c;
-    --success-soft: #1d2a24;
-    --danger: #e87a6c;
-    --danger-soft: #2e1f1d;
+    --secondary: #bfafa0;
+    --secondary-soft: #2b2521;
 
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.4), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+    /* Deeper than --canvas, so the sheet still reads as lifted *off* the
+       block. Matching the block to the surface tone instead sank the sheet
+       into it and lost the whole block/sheet split in dark mode. */
+    --block: #000000;
+    --block-raised: #1a1a1a;
 
-    --header-bg: rgba(20, 19, 23, 0.85);
-    --scrim: rgba(0, 0, 0, 0.55);
+    --success: #6bb58a;
+    --success-soft: #1b2a22;
+    --danger: #e08a76;
+    --danger-soft: #2e1d1b;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.5), 0 24px 48px -20px rgba(0, 0, 0, 0.8);
+    --shadow-float: 0 4px 8px rgba(0, 0, 0, 0.5), 0 40px 80px -32px rgba(0, 0, 0, 0.9);
   }
-
-  /* The accent ring on the featured plan needs the lifted orange too. */
-  .plan-featured {
-    box-shadow: var(--shadow-lg), inset 0 0 0 1.5px rgba(236, 116, 64, 0.4);
-  }
-
-  /* .flag deliberately NOT overridden here: it sits on the white PDF mock,
-     which stays light in dark mode. */
 }
 
 /* ----------------------------------------------------------------- reset */
@@ -111,7 +134,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--canvas);
+  /* The page background IS the block: the sheet is a rounded panel laid on
+     top of it, so the near-black shows at the top and behind the footer. */
+  background: var(--block);
   color: var(--ink);
   font-family: var(--font);
   font-size: 16px;
@@ -147,29 +172,30 @@ h3,
 h4 {
   margin: 0;
   color: var(--ink);
-  line-height: 1.18;
-  letter-spacing: -0.022em;
-  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 800;
 }
 
 h1 {
-  font-size: clamp(2.1rem, 4.6vw, 3.15rem);
-  letter-spacing: -0.032em;
+  font-size: clamp(2.4rem, 5.4vw, 3.9rem);
+  letter-spacing: -0.042em;
 }
 
 h2 {
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
-  letter-spacing: -0.028em;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  letter-spacing: -0.036em;
 }
 
 h3 {
-  font-size: 1.125rem;
-  letter-spacing: -0.014em;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.018em;
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
   border-radius: var(--r-sm);
 }
 
@@ -180,8 +206,16 @@ h3 {
   margin-inline: auto;
 }
 
+/* The light panel the whole page body sits on. */
+.sheet {
+  background: var(--canvas);
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  position: relative;
+  z-index: 1;
+}
+
 .section {
-  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  padding-block: clamp(3.5rem, 7vw, 6rem);
 }
 
 /* Alternating tone replaces the hairline rules that used to divide sections. */
@@ -190,20 +224,35 @@ h3 {
 }
 
 .section-head {
-  max-width: 46ch;
+  max-width: 44ch;
   margin-bottom: var(--s10);
 }
 
 .section-head p {
-  margin-top: var(--s3);
+  margin-top: var(--s4);
   color: var(--ink-2);
-  font-size: 1.02rem;
+  font-size: 1.05rem;
+}
+
+/* Small uppercase label above a heading. The one place tracking opens up. */
+.eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: var(--s3);
+}
+
+.eyebrow-on-block {
+  color: var(--on-block-muted);
 }
 
 .lede {
   color: var(--ink-2);
-  font-size: clamp(1.02rem, 1.5vw, 1.14rem);
-  max-width: 54ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+  max-width: 52ch;
 }
 
 .muted {
@@ -212,17 +261,13 @@ h3 {
 
 .fine {
   color: var(--ink-3);
-  font-size: 0.87rem;
+  font-size: 0.88rem;
 }
 
-/* ---------------------------------------------------------------- header */
+/* ---------------------------------------------------- header (on block) */
 
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--header-bg);
-  backdrop-filter: saturate(180%) blur(12px);
+  background: var(--block);
 }
 
 .site-header .shell {
@@ -230,7 +275,8 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: var(--s5);
-  height: 64px;
+  min-height: 76px;
+  padding-block: var(--s3);
 }
 
 /* The two marks have different aspect ratios (the Wrench lockup carries a
@@ -252,11 +298,11 @@ h3 {
 }
 
 .brand-wrench {
-  height: 26px;
+  height: 31px;
 }
 
 .brand-geonix {
-  height: 17px;
+  height: 20px;
 }
 
 .brand-pair {
@@ -268,8 +314,8 @@ h3 {
 
 .brand-divider {
   width: 1px;
-  height: 22px;
-  background: var(--hairline);
+  height: 26px;
+  background: rgba(255, 255, 255, 0.18);
   flex: none;
 }
 
@@ -282,15 +328,15 @@ h3 {
   }
 
   .brand-wrench {
-    height: 21px;
+    height: 25px;
   }
 
   .brand-geonix {
-    height: 14px;
+    height: 17px;
   }
 
   .brand-divider {
-    height: 17px;
+    height: 20px;
   }
 }
 
@@ -300,11 +346,11 @@ h3 {
   }
 
   .brand-wrench {
-    height: 19px;
+    height: 22px;
   }
 
   .brand-geonix {
-    height: 12px;
+    height: 14px;
   }
 }
 
@@ -312,13 +358,14 @@ h3 {
   display: flex;
   align-items: center;
   gap: var(--s6);
-  font-size: 0.925rem;
-  color: var(--ink-2);
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--on-block-muted);
 }
 
 /* :not(.btn) matters. `.nav a` (0,1,1) outranks `.btn`/`.btn-sm` (0,1,0), so
    without it this rule zeroed the button's horizontal padding and its label
-   spilled outside the pill — and the hover rule repainted its text dark. */
+   spilled outside the pill — and the hover rule repainted its text. */
 .nav a:not(.btn) {
   padding: var(--s2) 0;
   transition: color 0.15s ease;
@@ -326,10 +373,10 @@ h3 {
 
 .nav a:not(.btn):hover,
 .nav a:not(.btn).current {
-  color: var(--ink);
+  color: var(--on-block);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 700px) {
   .nav-hide {
     display: none;
   }
@@ -342,16 +389,16 @@ h3 {
   align-items: center;
   justify-content: center;
   gap: var(--s2);
-  min-height: 46px;
-  padding: 0 var(--s6);
+  min-height: 54px;
+  padding: 0 var(--s8);
   border: 0;
-  border-radius: var(--r-md);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.005em;
+  border-radius: var(--r-pill);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
 }
 
 .btn:active:not(:disabled) {
@@ -394,10 +441,20 @@ h3 {
   background: var(--sunken);
 }
 
+/* A tonal button sitting on the espresso block. */
+.btn-on-block {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-block);
+}
+
+.btn-on-block:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.18);
+}
+
 .btn-sm {
-  min-height: 38px;
-  padding: 0 var(--s4);
-  font-size: 0.875rem;
+  min-height: 42px;
+  padding: 0 var(--s5);
+  font-size: 0.88rem;
 }
 
 .btn-block {
@@ -410,17 +467,65 @@ h3 {
   cursor: not-allowed;
 }
 
-/* Bare icon rather than a tinted rounded chip — the badge was decoration and
-   read as boilerplate. */
-.card-icon {
-  display: block;
-  color: var(--accent);
-  margin-bottom: var(--s4);
+/* ------------------------------------------------------------ icon tiles */
+
+/* Rounded-square tile, lifted from the reference grids. Espresso-toned by
+   default so a row of them reads as information, not as three CTAs. */
+.icon-tile {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--secondary-soft);
+  color: var(--secondary);
+  margin-bottom: var(--s5);
+  flex: none;
 }
 
-.card-icon svg {
+.icon-tile svg {
   width: 22px;
   height: 22px;
+}
+
+.icon-tile-accent {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ----------------------------------------------------------------- chips */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: 7px var(--s4);
+  border-radius: var(--r-pill);
+  background: var(--muted);
+  color: var(--ink-2);
+  font-size: 0.79rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+.chip-accent {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.chip-on-block {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-block);
+}
+
+.chip-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
 }
 
 /* ----------------------------------------------------------------- cards */
@@ -433,9 +538,9 @@ h3 {
 }
 
 .card h3 + p {
-  margin-top: var(--s2);
+  margin-top: var(--s3);
   color: var(--ink-2);
-  font-size: 0.94rem;
+  font-size: 0.96rem;
 }
 
 .grid {
@@ -463,6 +568,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   padding: var(--s8);
+  border-radius: var(--r-xl);
 }
 
 .product-card-body {
@@ -472,25 +578,33 @@ h3 {
 
 /* ------------------------------------------------------------------ hero */
 
+/* Lives on the block, so its type is ecru rather than ink. */
 .hero {
-  padding-block: clamp(3rem, 6vw, 5rem) clamp(3.5rem, 7vw, 5.5rem);
+  background: var(--block);
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(4rem, 8vw, 7rem);
+  color: var(--on-block);
+}
+
+.hero h1 {
+  color: var(--on-block);
+}
+
+.hero .lede {
+  color: var(--on-block-muted);
+  margin-top: var(--s6);
 }
 
 .hero-grid {
   display: grid;
-  gap: clamp(2.5rem, 5vw, 4rem);
+  gap: clamp(3rem, 6vw, 4.5rem);
   grid-template-columns: 1fr;
   align-items: center;
 }
 
-@media (min-width: 940px) {
+@media (min-width: 960px) {
   .hero-grid {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1.02fr 0.98fr;
   }
-}
-
-.hero .lede {
-  margin-top: var(--s5);
 }
 
 .hero-actions {
@@ -501,33 +615,119 @@ h3 {
 }
 
 .hero-note {
-  margin-top: var(--s5);
-  color: var(--ink-3);
-  font-size: 0.87rem;
+  margin-top: var(--s6);
+  color: var(--on-block-muted);
+  font-size: 0.88rem;
 }
 
-/* --------------------------------------------------------------- jobcard */
+/* The sheet's rounded top overlaps the block it sits on. */
+.hero + .sheet,
+.hero-plain + .sheet {
+  margin-top: calc(var(--r-sheet) * -1);
+}
+
+/* Centred hero for the home page — no mockup beside it. */
+.hero-plain {
+  background: var(--block);
+  color: var(--on-block);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(4.5rem, 9vw, 8rem);
+}
+
+.hero-plain h1 {
+  color: var(--on-block);
+}
+
+.hero-plain .lede {
+  color: var(--on-block-muted);
+  margin-top: var(--s6);
+}
+
+/* --------------------------------------------------- job card mock stack */
+
+/* A small layered composition rather than one flat card: the reference hero
+   stacks its artwork, and a single centred rectangle beside a headline reads
+   as a placeholder. */
+.mock-stack {
+  position: relative;
+  padding-bottom: var(--s10);
+}
+
+.mock-float {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s3) var(--s5);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-float);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.mock-float span:first-child {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  flex: none;
+}
+
+.mock-float svg {
+  width: 15px;
+  height: 15px;
+}
+
+.mock-float-tr {
+  top: calc(var(--s6) * -1);
+  right: calc(var(--s5) * -1);
+}
+
+.mock-float-bl {
+  bottom: 0;
+  left: calc(var(--s5) * -1);
+}
+
+/* Off-canvas on a phone, where there is no side margin to float into. */
+@media (max-width: 680px) {
+  .mock-float-tr {
+    right: 0;
+    top: calc(var(--s5) * -1);
+  }
+
+  .mock-float-bl {
+    left: 0;
+  }
+
+  .mock-float {
+    font-size: 0.78rem;
+    padding: var(--s2) var(--s4);
+  }
+}
+
+/* --------------------------------------------------------- job card demo */
 
 /* Deliberately theme-independent: this is a mock of the generated PDF, and the
    PDF is white paper with a navy accent (BRAND_COLOR in pdf_generator.py).
    It used to follow --surface, so in dark mode it showed as a black "PDF". */
 .jobcard {
   --paper: #ffffff;
-  --paper-ink: #1b1a18;
-  --paper-ink-2: #6b655d;
-  --paper-ink-3: #9b958c;
-  --paper-line: #e8e5e0;
+  --paper-ink: #3b2a25;
+  --paper-ink-2: #5c5c5c;
+  --paper-ink-3: #8c8c8c;
+  --paper-line: #ebebeb;
   --paper-navy: #1f3a5f;
-}
 
-/* --------------------------------------------------------- job card demo */
-
-.jobcard {
+  position: relative;
   background: var(--paper);
   color: var(--paper-ink);
   border-radius: var(--r-xl);
   padding: var(--s6);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-float);
 }
 
 .jobcard-top {
@@ -540,7 +740,8 @@ h3 {
 }
 
 .jobcard-id {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--paper-ink-3);
 }
 
@@ -554,16 +755,16 @@ h3 {
 }
 
 .jobcard-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--paper-navy);
-  margin-bottom: var(--s1);
+  margin-bottom: var(--s2);
 }
 
 .jobcard-value {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: var(--paper-ink);
 }
 
@@ -583,13 +784,18 @@ h3 {
 
 .flag {
   margin-top: var(--s4);
-  background: #fdf1e8;
+  background: #f6e4d8;
   border-radius: var(--r-md);
   padding: var(--s3) var(--s4);
   font-size: 0.86rem;
   color: #8a3a14;
   display: flex;
-  gap: var(--s2);
+  gap: var(--s3);
+}
+
+.flag > span:first-child {
+  font-weight: 800;
+  flex: none;
 }
 
 /* ----------------------------------------------------------------- steps */
@@ -597,7 +803,7 @@ h3 {
 .steps {
   counter-reset: step;
   display: grid;
-  gap: var(--s6);
+  gap: var(--s4);
   grid-template-columns: 1fr;
 }
 
@@ -614,28 +820,35 @@ h3 {
   box-shadow: var(--shadow);
 }
 
+/* A numbered tile rather than a bare numeral — same shape language as
+   .icon-tile, so the two never look like different systems. */
 .step::before {
   counter-increment: step;
   content: counter(step, decimal-leading-zero);
-  display: block;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--accent-soft);
   color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--s3);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: var(--s5);
 }
 
 .step p {
-  margin-top: var(--s2);
+  margin-top: var(--s3);
   color: var(--ink-2);
-  font-size: 0.94rem;
+  font-size: 0.96rem;
 }
 
 /* --------------------------------------------------------------- pricing */
 
 /* Stretch, not start: the two cards hold different amounts of content (the
-   Team card carries a seat stepper), and letting them size independently left
-   their Subscribe buttons on different baselines. */
+   Team card carries a seat note), and letting them size independently left
+   their CTAs on different baselines. */
 .pricing {
   display: grid;
   gap: var(--s5);
@@ -643,7 +856,7 @@ h3 {
   align-items: stretch;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 880px) {
   .pricing {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -659,9 +872,10 @@ h3 {
   height: 100%;
 }
 
-/* The one accented element on the page. */
+/* The recommended plan says so with a chip. The old version relied on a 1.5px
+   tinted edge, which nobody reads as "pick this one". */
 .plan-featured {
-  box-shadow: var(--shadow-lg), inset 0 0 0 1.5px rgba(201, 83, 31, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
 .plan-head {
@@ -669,14 +883,14 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: var(--s4);
-  min-height: 30px;
+  min-height: 34px;
 }
 
 .plan-sub {
-  margin-top: var(--s2);
+  margin-top: var(--s3);
   color: var(--ink-2);
-  font-size: 0.94rem;
-  min-height: 2.8em;
+  font-size: 0.96rem;
+  min-height: 2.9em;
 }
 
 .price {
@@ -687,15 +901,16 @@ h3 {
 }
 
 .price strong {
-  font-size: 2.6rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
 }
 
 .price span {
   color: var(--ink-3);
   font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .plan-features {
@@ -704,7 +919,7 @@ h3 {
   padding: 0;
   display: grid;
   gap: var(--s3);
-  font-size: 0.94rem;
+  font-size: 0.96rem;
 }
 
 .plan-features li {
@@ -716,7 +931,7 @@ h3 {
 .plan-features li::before {
   content: "✓";
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.85rem;
   line-height: 1.6;
   flex: none;
@@ -729,11 +944,13 @@ h3 {
 
 /* ---------------------------------------------------------------- footer */
 
+/* On the block, like the header — the sheet ends above it, so the page closes
+   on the same espresso it opened on. */
 .site-footer {
-  background: var(--muted);
-  padding-block: var(--s8);
-  color: var(--ink-3);
-  font-size: 0.88rem;
+  background: var(--block);
+  padding-block: var(--s10);
+  color: var(--on-block-muted);
+  font-size: 0.9rem;
 }
 
 .site-footer .shell {
@@ -744,8 +961,12 @@ h3 {
   gap: var(--s4);
 }
 
+.site-footer a {
+  transition: color 0.15s ease;
+}
+
 .site-footer a:hover {
-  color: var(--ink);
+  color: var(--on-block);
 }
 
 /* -------------------------------------------------------------- centered */
@@ -756,24 +977,25 @@ h3 {
   place-items: center;
   padding: var(--s6);
   text-align: center;
+  background: var(--canvas);
 }
 
 .center-card {
-  width: min(420px, 100%);
+  width: min(440px, 100%);
   background: var(--surface);
   border-radius: var(--r-xl);
   padding: var(--s10) var(--s8);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
 }
 
 .badge-round {
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   margin: 0 auto var(--s6);
-  font-size: 1.35rem;
+  font-size: 1.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -835,21 +1057,27 @@ a.dl:hover {
   color: var(--ink-3);
 }
 
-/* Bare glyph, no tinted container — matches .card-icon. */
 .dl-icon {
   flex: none;
   display: grid;
   place-items: center;
-  color: var(--accent);
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--secondary-soft);
+  color: var(--secondary);
 }
 
+/* --sunken, not --muted: the downloads section IS --muted, so a muted tile on
+   it was the same colour as its background and the glyph floated untiled. */
 .dl[aria-disabled='true'] .dl-icon {
+  background: var(--sunken);
   color: var(--ink-3);
 }
 
 .dl-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .dl-text {
@@ -859,9 +1087,9 @@ a.dl:hover {
 }
 
 .dl-text strong {
-  font-size: 0.97rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.012em;
 }
 
 .dl-text small {
@@ -873,13 +1101,20 @@ a.dl:hover {
   margin-left: auto;
   flex: none;
   font-style: normal;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--ink-3);
 }
 
 /* ---------------------------------------------------------------- mobile */
 
 @media (max-width: 640px) {
+  :root {
+    --r-sheet: 28px;
+  }
+
   /* Desktop uses three different card insets (24 / 24 / 32). Stacked in a
      single column that reads as three different left margins as you scroll,
      so on a phone they all share one. */
@@ -899,7 +1134,7 @@ a.dl:hover {
     width: 100%;
   }
 
-  /* Likewise two different stack gaps (16 and 24) become one rhythm. */
+  /* Likewise two different stack gaps become one rhythm. */
   .grid,
   .steps,
   .pricing,
@@ -928,7 +1163,7 @@ a.dl:hover {
   }
 
   .price strong {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
 
   .plan-features {
@@ -955,7 +1190,15 @@ a.dl:hover {
   }
 
   .hero-grid {
-    gap: var(--s8);
+    gap: var(--s10);
+  }
+
+  .icon-tile,
+  .step::before {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    margin-bottom: var(--s4);
   }
 
   .site-footer .shell {

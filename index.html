@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Geonix Software — tools for repair shops</title>
 <meta name="description" content="Small, focused software for people who work on cars for a living." />
+<meta name="theme-color" content="#1a1a1a" />
 <link rel="icon" href="data:," />
 <link rel="stylesheet" href="assets/site.css" />
 </head>
@@ -13,10 +14,7 @@
 <header class="site-header">
   <div class="shell">
     <a href="index.html" class="brand" aria-label="Geonix Software home">
-      <picture>
-        <source srcset="assets/geonix_logo_light.svg" media="(prefers-color-scheme: dark)" />
-        <img src="assets/geonix_logo.svg" alt="Geonix" class="brand-geonix" />
-      </picture>
+      <img src="assets/geonix_logo_light.svg" alt="Geonix" class="brand-geonix" />
     </a>
     <nav class="nav">
       <a href="index.html" class="current nav-hide">Home</a>
@@ -27,23 +25,27 @@
   </div>
 </header>
 
-<section class="hero">
+<section class="hero-plain">
   <div class="shell">
+    <span class="eyebrow eyebrow-on-block">Geonix Software</span>
     <h1 style="max-width:16ch">Software built for repair shops, not boardrooms.</h1>
-    <p class="lede" style="margin-top:var(--s5)">
+    <p class="lede">
       We build small, focused tools for people who work on cars for a living. No dashboards you
       don't need, no setup calls, no jargon.
     </p>
     <div class="hero-actions">
       <a href="geonix_wrench.html" class="btn btn-primary">See Geonix Wrench</a>
-      <a href="#about" class="btn btn-tonal">About us</a>
+      <a href="#about" class="btn btn-on-block">About us</a>
     </div>
   </div>
 </section>
 
-<section id="about" class="section section-muted">
+<main class="sheet">
+
+<section id="about" class="section">
   <div class="shell">
     <div class="section-head">
+      <span class="eyebrow">About</span>
       <h2>A small team, a short list</h2>
       <p>
         We don't have a sales department. Most of what we build starts with someone telling us
@@ -53,6 +55,7 @@
 
     <div class="grid grid-2">
       <div class="card">
+        <span class="icon-tile icon-tile-accent" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l9-7 9 7v11a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg></span>
         <h3>Where Wrench came from</h3>
         <p>
           A shop owner was spending almost an hour every evening writing up job cards from
@@ -61,6 +64,7 @@
         </p>
       </div>
       <div class="card">
+        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0 5.9 5.9l-8.3 8.3a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="M20.6 12.2A4.5 4.5 0 0 0 14.7 6.3l-2.6-2.6a3 3 0 0 0-4.2 0L4.2 6.9"/></svg></span>
         <h3>How we work</h3>
         <p>
           We talk to the people who'll use a thing before writing any code, ship one piece at a
@@ -72,15 +76,16 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section section-muted">
   <div class="shell">
     <div class="section-head">
+      <span class="eyebrow">Products</span>
       <h2>What we build</h2>
     </div>
 
     <div class="card product-card">
       <div class="product-card-body">
-        <h3 style="font-size:1.45rem">Geonix Wrench</h3>
+        <h3 style="font-size:1.5rem">Geonix Wrench</h3>
         <p style="margin-top:var(--s3);color:var(--ink-2);max-width:48ch">
           Record a voice note about a repair and get back a job card with the vehicle, labor
           hours, parts, and anything worth double-checking before you invoice it.
@@ -91,6 +96,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="site-footer">
   <div class="shell">
