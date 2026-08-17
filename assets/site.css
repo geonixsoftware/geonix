@@ -620,14 +620,17 @@ h3 {
 
 /* Deliberately theme-independent: this is a mock of the generated PDF, and the
    PDF is white paper with a navy accent (BRAND_COLOR in pdf_generator.py).
-   It used to follow --surface, so in dark mode it showed as a black "PDF". */
+   It used to follow --surface, so in dark mode it showed as a black "PDF".
+   Every colour below is the value pdf_generator.py actually draws with. */
 .jobcard {
   --paper: #ffffff;
   --paper-ink: #3b2a25;
   --paper-ink-2: #5c5c5c;
   --paper-ink-3: #8c8c8c;
   --paper-line: #ebebeb;
-  --paper-navy: #1f3a5f;
+  --paper-navy: #1f3a5f; /* BRAND_COLOR */
+  --paper-amber: #f2a900; /* ACCENT_COLOR */
+  --paper-zebra: #f5f5f5; /* reportlab "whitesmoke" */
 
   position: relative;
   background: var(--paper);
@@ -637,72 +640,94 @@ h3 {
   box-shadow: var(--shadow-float);
 }
 
-.jobcard-top {
+/* The shop's logo slot, left empty on purpose. Sized to the box the PDF
+   reserves — up to 2.5in wide by 0.5in tall — so the frame stands in at the
+   real proportions rather than at whatever looked neat. */
+.jobcard-logo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--s4);
-  padding-bottom: var(--s4);
-  border-bottom: 1px solid var(--paper-line);
-}
-
-.jobcard-id {
-  font-size: 0.78rem;
-  font-weight: 600;
+  justify-content: center;
+  width: 150px;
+  height: 44px;
+  margin-bottom: var(--s4);
+  border: 1.5px dashed #d8d2cc;
+  border-radius: var(--r-sm);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--paper-ink-3);
 }
 
-.jobcard-row {
-  padding-block: var(--s4);
-  border-bottom: 1px solid var(--paper-line);
-}
-
-.jobcard-row:last-of-type {
-  border-bottom: 0;
-}
-
-.jobcard-label {
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--paper-navy);
-  margin-bottom: var(--s2);
-}
-
-.jobcard-value {
-  font-size: 0.96rem;
-  color: var(--paper-ink);
-}
-
-.jobcard-line {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s4);
-  font-size: 0.92rem;
-  padding-block: var(--s1);
-}
-
-.jobcard-line span:last-child {
-  font-variant-numeric: tabular-nums;
+/* The grey 10pt lines: the two under the logo, and the currency line at the
+   foot. Same style in the PDF, so same class here. */
+.jobcard-meta {
+  font-size: 0.8rem;
+  line-height: 1.45;
   color: var(--paper-ink-2);
 }
 
-.flag {
-  margin-top: var(--s4);
-  background: #f6e4d8;
-  border-radius: var(--r-md);
-  padding: var(--s3) var(--s4);
-  font-size: 0.86rem;
-  color: #8a3a14;
-  display: flex;
-  gap: var(--s3);
+.jobcard-foot {
+  margin-top: var(--s5);
 }
 
-.flag > span:first-child {
-  font-weight: 800;
-  flex: none;
+/* Title case, navy, 13pt — not the tiny letterspaced uppercase eyebrow this
+   mock used to invent. The PDF's headings are the loudest thing on the page
+   after the table header, and looking like it is the whole point. */
+.jobcard-h {
+  margin-top: var(--s5);
+  margin-bottom: var(--s2);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--paper-navy);
+}
+
+.jobcard-body {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--paper-ink);
+}
+
+.jobcard-table {
+  width: 100%;
+  margin-top: var(--s3);
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.jobcard-table th,
+.jobcard-table td {
+  padding: 7px 10px;
+  text-align: right;
+}
+
+/* colWidths 3.0in / 1.0in / 1.3in / 1.3in of a 6.6in table. */
+.jobcard-table th:first-child,
+.jobcard-table td:first-child {
+  width: 45.5%;
+  text-align: left;
+}
+
+.jobcard-table thead th {
+  background: var(--paper-navy);
+  color: #ffffff;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.jobcard-table tbody tr:nth-child(even) {
+  background: var(--paper-zebra);
+}
+
+.jobcard-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The amber rule separating the subtotal from the line items. */
+.jobcard-table tfoot td {
+  border-top: 1px solid var(--paper-amber);
+  font-weight: 700;
 }
 
 /* ----------------------------------------------------------------- steps */
@@ -994,6 +1019,19 @@ a.dl:hover {
   color: var(--ink-3);
 }
 
+/* The caveats under the grid. Stacked tight so they read as footnotes to the
+   downloads rather than as body copy competing with them. */
+.dl-notes {
+  margin-top: var(--s6);
+  display: grid;
+  gap: var(--s2);
+}
+
+.dl-notes strong {
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
 /* ---------------------------------------------------------------- mobile */
 
 @media (max-width: 640px) {
@@ -1010,6 +1048,24 @@ a.dl:hover {
   .jobcard,
   .product-card {
     padding: var(--s5);
+  }
+
+  /* Four money columns do not fit a phone at desktop metrics — "Amount" was
+     clipped off the right edge of the paper. Tightened rather than scrolled or
+     stacked: this is a picture of a sheet of paper, and paper does not scroll
+     sideways or reflow into cards. */
+  .jobcard-table {
+    font-size: 0.72rem;
+  }
+
+  .jobcard-table th,
+  .jobcard-table td {
+    padding: 6px 5px;
+  }
+
+  .jobcard-table th:first-child,
+  .jobcard-table td:first-child {
+    width: 38%;
   }
 
   .product-card {

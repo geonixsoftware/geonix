@@ -10,7 +10,7 @@
 <!-- ?v= is a cache-buster. Bump it in all four pages whenever site.css
      changes: browsers hold the old stylesheet for long enough that new markup
      lands against old rules, which is how the unstyled-icon blowout happened. -->
-<link rel="stylesheet" href="assets/site.css?v=2" />
+<link rel="stylesheet" href="assets/site.css?v=3" />
 </head>
 <body>
 
@@ -55,42 +55,76 @@
         <a href="#download" class="btn btn-primary">Download the app</a>
         <a href="#how-it-works" class="btn btn-on-block">How it works</a>
       </div>
-      <p class="hero-note">macOS, Windows, Linux, iPhone and Android.</p>
+      <!-- Kept in step with the #download rows: promising five platforms while
+           three of them say "Coming soon" further down the same page is the
+           kind of small dishonesty a shop notices. -->
+      <p class="hero-note">Android, macOS and Windows. iPhone and Linux coming soon.</p>
     </div>
 
     <!-- Just the job card. It is the actual thing being sold, so it carries
          the hero on its own — the floating "0:41 of voice" and "PDF ready"
          chips that used to sit over it were decoration for decoration's
-         sake. -->
+         sake.
+
+         This is a faithful mock of the generated PDF, not a stylised idea of
+         one: same order (logo, the two grey meta lines, three navy title-case
+         headings, the four-column table with its navy header, zebra rows,
+         amber rule above the subtotal, then the currency line), and the same
+         numbers as a real export. Anything that drifts from
+         backend/pdf_generator.py belongs here, not there.
+
+         The logo slot is deliberately an empty frame: on a real job card that
+         is the shop's own logo, and showing ours there implied the paperwork
+         comes out branded Geonix. -->
     <div class="jobcard">
-      <div class="jobcard-top">
-        <span class="jobcard-id">Job card #128</span>
-        <span class="jobcard-id">11 Aug 2026</span>
-      </div>
+      <span class="jobcard-logo">Your logo</span>
 
-      <div class="jobcard-row">
-        <p class="jobcard-label">Vehicle</p>
-        <p class="jobcard-value">2018 Volkswagen Golf</p>
-      </div>
+      <p class="jobcard-meta">Estimate / Invoice — Job Card #2</p>
+      <p class="jobcard-meta">Date: 16 August 2026</p>
 
-      <div class="jobcard-row">
-        <p class="jobcard-label">Work performed</p>
-        <p class="jobcard-value">
-          Routine oil change. Replaced oil filter, refilled with 5W synthetic.
-        </p>
-      </div>
+      <p class="jobcard-h">Vehicle Information</p>
+      <p class="jobcard-body">2018 Volkswagen Golf</p>
 
-      <div class="jobcard-row">
-        <p class="jobcard-label">Line items</p>
-        <div class="jobcard-line"><span>Labor</span><span>0.75 hrs · €63.75</span></div>
-        <div class="jobcard-line"><span>Oil filter</span><span>1 · price to add</span></div>
-        <div class="jobcard-line"><span>5W synthetic oil</span><span>5 L · price to add</span></div>
-      </div>
+      <p class="jobcard-h">Work Performed</p>
+      <p class="jobcard-body">
+        Customer brought in a Volkswagen 2018 Golf for a routine oil change. I replaced the
+        oil filter and gave him 4.5 L of 5W-30 synthetic engine oil.
+      </p>
 
-      <div class="flag">
-        <span aria-hidden="true">!</span>
-        <span>You said 4.5 litres, itemised 5. Worth a check before you invoice.</span>
-      </div>
+      <p class="jobcard-h">Labor &amp; Parts</p>
+      <table class="jobcard-table">
+        <thead>
+          <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Rate</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Labor</td>
+            <td>45m</td>
+            <td>€45.00/hr</td>
+            <td>€33.75</td>
+          </tr>
+          <tr>
+            <td>oil filter</td>
+            <td>1</td>
+            <td>€5.00</td>
+            <td>€5.00</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"></td>
+            <td>Subtotal</td>
+            <td>€38.75</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <p class="jobcard-meta jobcard-foot">Currency: EUR</p>
     </div>
   </div>
 </section>
@@ -238,61 +272,87 @@
     </div>
 
     <!-- ─────────────────────────────────────────────────────────────────────
-         TO PUBLISH A DOWNLOAD: change that row's <span class="dl"> into
+         These links point at /releases/latest/download/, not at a version.
+         The release workflow uploads an unversioned copy of every artifact
+         alongside the versioned one precisely so these hrefs never need
+         editing again — releasing 1.1.0 moves "latest" and the rows follow.
+
+         They 404 until a release is PUBLISHED. The workflow creates it as a
+         draft on purpose, and a draft is invisible to anyone but a maintainer.
+
+         TO WIRE A ROW THAT IS STILL "COMING SOON": change its
+         <span class="dl"> into
 
              <a class="dl" href="https://your-link-here">
 
          (closing </span> becomes </a>), and delete its
-         <em class="dl-soon">Coming soon</em> line.
-
-         Nothing else changes — an <a class="dl"> is styled as an active
-         button automatically, and picks up hover and keyboard focus.
+         <em class="dl-soon">Coming soon</em> line. Nothing else changes — an
+         <a class="dl"> is styled as an active button automatically, and picks
+         up hover and keyboard focus.
          ───────────────────────────────────────────────────────────────── -->
 
     <div class="downloads">
+      <!-- iOS cannot be a file download: Apple only installs apps through the
+           App Store or TestFlight, so there is nothing to link here until the
+           app is on one of them. The email line below is the way in meanwhile. -->
       <span class="dl" aria-disabled="true">
         <span class="dl-text">
           <strong>iPhone &amp; iPad</strong>
-          <small>App Store</small>
+          <small>App Store &amp; TestFlight</small>
         </span>
-        <em class="dl-soon">Coming soon</em>
+        <em class="dl-soon">In review</em>
       </span>
 
-      <span class="dl" aria-disabled="true">
+      <a class="dl" href="https://github.com/geonixsoftware/geonix_wrench/releases/latest/download/geonix-wrench-android.apk">
         <span class="dl-text">
           <strong>Android</strong>
-          <small>Google Play</small>
+          <small>.apk — install directly</small>
         </span>
-        <em class="dl-soon">Coming soon</em>
-      </span>
+      </a>
 
-      <a class="dl" href="https://github.com/geonixsoftware/geonix/releases/download/v1.0.0/geonix-wrench-1.0.0-macos.dmg">
+      <a class="dl" href="https://github.com/geonixsoftware/geonix_wrench/releases/latest/download/geonix-wrench-macos.dmg">
         <span class="dl-text">
           <strong>macOS</strong>
           <small>.dmg</small>
         </span>
       </a>
 
-      <a class="dl" href="https://github.com/geonixsoftware/geonix/releases/download/v1.0.0/geonix-wrench-1.0.0-windows.exe">
+      <a class="dl" href="https://github.com/geonixsoftware/geonix_wrench/releases/latest/download/geonix-wrench-windows.exe">
         <span class="dl-text">
           <strong>Windows</strong>
           <small>.exe</small>
         </span>
       </a>
 
-      <a class="dl" href="https://github.com/geonixsoftware/geonix/releases/download/v1.0.0/geonix-wrench-1.0.0-linux.deb">
+      <span class="dl" aria-disabled="true">
         <span class="dl-text">
           <strong>Linux</strong>
           <small>.deb</small>
         </span>
-      </a>
+        <em class="dl-soon">Coming soon</em>
+      </span>
     </div>
 
-    <p class="fine" style="margin-top:var(--s6)">
-      Want the iPhone or Android build before it reaches the stores?
-      <a href="mailto:geonix.software@proton.me" style="color:var(--accent);font-weight:700">Email us</a>
-      and we'll send you one.
-    </p>
+    <!-- Both of these exist because a download that looks broken is worse than
+         one that is honestly labelled: Android will warn about an unknown
+         source, and the macOS build is not yet notarized, so Gatekeeper
+         refuses it on first open. -->
+    <div class="dl-notes">
+      <p class="fine">
+        <strong>Android:</strong> your phone will ask you to allow installs from
+        this source the first time — that is expected for an app that does not
+        come from Play.
+      </p>
+      <p class="fine">
+        <strong>macOS:</strong> the first launch needs right-click &rarr; Open
+        rather than a double-click, until the build is notarized by Apple.
+      </p>
+      <p class="fine">
+        On an iPhone, or want a build before it reaches the stores?
+        <a href="mailto:geonix.software@proton.me" style="color:var(--accent);font-weight:700">Email us</a>
+        and we'll send you one.
+      </p>
+    </div>
   </div>
 </section>
 
