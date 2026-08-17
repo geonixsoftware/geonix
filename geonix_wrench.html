@@ -10,7 +10,7 @@
 <!-- ?v= is a cache-buster. Bump it in all four pages whenever site.css
      changes: browsers hold the old stylesheet for long enough that new markup
      lands against old rules, which is how the unstyled-icon blowout happened. -->
-<link rel="stylesheet" href="assets/site.css?v=4" />
+<link rel="stylesheet" href="assets/site.css?v=5" />
 </head>
 <body>
 
@@ -55,10 +55,11 @@
         <a href="#download" class="btn btn-primary">Download the app</a>
         <a href="#how-it-works" class="btn btn-on-block">How it works</a>
       </div>
-      <!-- Kept in step with the #download rows: promising five platforms while
-           three of them say "Coming soon" further down the same page is the
-           kind of small dishonesty a shop notices. -->
-      <p class="hero-note">Android, macOS and Windows. iPhone and Linux coming soon.</p>
+      <!-- Kept in step with the #download rows: promising platforms that say
+           "Coming soon" further down the same page is the kind of small
+           dishonesty a shop notices. Every row is inert right now, so this
+           line must not name anything as available. -->
+      <p class="hero-note">Coming soon to iPhone, Android, macOS and Windows.</p>
     </div>
 
     <!-- Just the job card. It is the actual thing being sold, so it carries
@@ -266,29 +267,29 @@
       <span class="eyebrow">Download</span>
       <h2>Get Geonix Wrench</h2>
       <p>
-        Install it on whatever you actually use in the shop, then subscribe from inside the app.
-        One account works across every device.
+        We're getting Wrench onto the stores. One account will work across every device, and
+        you'll subscribe from inside the app.
       </p>
     </div>
 
     <!-- ─────────────────────────────────────────────────────────────────────
-         These links point at /releases/latest/download/, not at a version.
-         The release workflow uploads an unversioned copy of every artifact
-         alongside the versioned one precisely so these hrefs never need
-         editing again — releasing 1.1.0 moves "latest" and the rows follow.
+         Every row is currently inert. Nothing here links anywhere, because
+         nothing is installable yet: iOS and Android are going to the stores,
+         and the desktop builds have no published release behind them.
 
-         They 404 until a release is PUBLISHED. The workflow creates it as a
-         draft on purpose, and a draft is invisible to anyone but a maintainer.
-
-         TO WIRE A ROW THAT IS STILL "COMING SOON": change its
-         <span class="dl"> into
+         TO WIRE A ROW UP: change its <span class="dl"> into
 
              <a class="dl" href="https://your-link-here">
 
-         (closing </span> becomes </a>), and delete its
-         <em class="dl-soon">Coming soon</em> line. Nothing else changes — an
-         <a class="dl"> is styled as an active button automatically, and picks
-         up hover and keyboard focus.
+         (closing </span> becomes </a>), and delete its <em class="dl-soon">
+         line. Nothing else changes — an <a class="dl"> is styled as an active
+         button automatically, and picks up hover and keyboard focus.
+
+         For the desktop builds the href is
+         /releases/latest/download/<artifact>. The release workflow uploads an
+         unversioned copy of each artifact alongside the versioned one so that
+         link never needs editing again; it 404s only while the release is
+         still a draft, which is how the workflow creates it.
          ───────────────────────────────────────────────────────────────── -->
 
     <div class="downloads">
@@ -298,31 +299,42 @@
       <span class="dl" aria-disabled="true">
         <span class="dl-text">
           <strong>iPhone &amp; iPad</strong>
-          <small>App Store &amp; TestFlight</small>
+          <small>App Store</small>
         </span>
-        <em class="dl-soon">In review</em>
+        <em class="dl-soon">Coming soon</em>
       </span>
 
-      <a class="dl" href="https://github.com/geonixsoftware/geonix_wrench/releases/latest/download/geonix-wrench-android.apk">
+      <!-- Play Store rather than a direct .apk: an app installed from an
+           unknown source makes the phone warn the user, and that is a bad first
+           impression for something a shop is meant to trust with its invoicing. -->
+      <span class="dl" aria-disabled="true">
         <span class="dl-text">
           <strong>Android</strong>
-          <small>.apk — install directly</small>
+          <small>Play Store</small>
         </span>
-      </a>
+        <em class="dl-soon">Coming soon</em>
+      </span>
 
-      <a class="dl" href="https://github.com/geonixsoftware/geonix_wrench/releases/latest/download/geonix-wrench-macos.dmg">
+      <!-- Disabled rather than linked: these pointed at
+           /releases/latest/download/, which 404s until a release is published,
+           and a button that fails after the click is worse than one that says
+           up front it is not ready. Re-enable by turning the <span> back into
+           <a class="dl" href="..."> and deleting the <em>. -->
+      <span class="dl" aria-disabled="true">
         <span class="dl-text">
           <strong>macOS</strong>
           <small>.dmg</small>
         </span>
-      </a>
+        <em class="dl-soon">Temporarily disabled</em>
+      </span>
 
-      <a class="dl" href="https://github.com/geonixsoftware/geonix_wrench/releases/latest/download/geonix-wrench-windows.exe">
+      <span class="dl" aria-disabled="true">
         <span class="dl-text">
           <strong>Windows</strong>
           <small>.exe</small>
         </span>
-      </a>
+        <em class="dl-soon">Temporarily disabled</em>
+      </span>
 
       <span class="dl" aria-disabled="true">
         <span class="dl-text">
@@ -333,26 +345,9 @@
       </span>
     </div>
 
-    <!-- Both of these exist because a download that looks broken is worse than
-         one that is honestly labelled: Android will warn about an unknown
-         source, and the macOS build is not yet notarized, so Gatekeeper
-         refuses it on first open. -->
-    <div class="dl-notes">
-      <p class="fine">
-        <strong>Android:</strong> your phone will ask you to allow installs from
-        this source the first time — that is expected for an app that does not
-        come from Play.
-      </p>
-      <p class="fine">
-        <strong>macOS:</strong> the first launch needs right-click &rarr; Open
-        rather than a double-click, until the build is notarized by Apple.
-      </p>
-      <p class="fine">
-        On an iPhone, or want a build before it reaches the stores?
-        <a href="mailto:geonix.software@proton.me" style="color:var(--accent);font-weight:700">Email us</a>
-        and we'll send you one.
-      </p>
-    </div>
+    <!-- The per-platform install caveats that used to sit here are gone with
+         the direct downloads they described. Nothing follows the rows now but
+         the footer. -->
   </div>
 </section>
 

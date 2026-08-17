@@ -318,8 +318,26 @@ h3 {
 
 /* ---------------------------------------------------- header (on block) */
 
+/* Pinned to the top for the whole scroll. The bar is opaque --block rather
+   than translucent because the pages scroll both dark blocks and the light
+   sheet underneath it, and a blur that reads well over one looks like a smear
+   over the other.
+
+   z-index sits above the .hero-plain stacking context (z-index: 1 further up)
+   so the hero does not slide over the bar on the way past. */
 .site-header {
   background: var(--block);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Anchor links (#download, #about, #pricing) would otherwise land with their
+   heading hidden behind the pinned bar. Offset every jump target by a little
+   more than the bar's own height. */
+:target,
+[id] {
+  scroll-margin-top: 92px;
 }
 
 .site-header .shell {
@@ -1079,19 +1097,6 @@ a.dl:hover {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ink-3);
-}
-
-/* The caveats under the grid. Stacked tight so they read as footnotes to the
-   downloads rather than as body copy competing with them. */
-.dl-notes {
-  margin-top: var(--s6);
-  display: grid;
-  gap: var(--s2);
-}
-
-.dl-notes strong {
-  color: var(--ink-2);
-  font-weight: 700;
 }
 
 /* ---------------------------------------------------------------- mobile */
