@@ -330,6 +330,15 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 50;
+  /* The mirror of .sheet, which is `--r-sheet --r-sheet 0 0` where it meets
+     the block above it. The bar is the block meeting content below it, so the
+     same corner treatment belongs on the bottom edge — otherwise the bar ends
+     in a hard square cut as soon as the page scrolls under it, which is the
+     one place on the site a dark-to-light boundary is not curved.
+
+     Invisible at rest: the hero block directly beneath is the same colour, so
+     the bar and hero still read as one slab until you scroll. */
+  border-radius: 0 0 var(--r-sheet) var(--r-sheet);
 }
 
 /* Anchor links (#download, #about, #pricing) would otherwise land with their
