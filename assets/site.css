@@ -206,6 +206,58 @@ h3 {
   margin-inline: auto;
 }
 
+/* ------------------------------------------------------------------ prose */
+
+/* The legal pages. Narrower than the marketing shell because these are read
+   rather than scanned, and a 70-character measure is what makes a long page of
+   text readable instead of a wall. */
+.shell-prose {
+  max-width: 46rem;
+}
+
+.shell-prose h1 {
+  margin-top: var(--s3);
+}
+
+.shell-prose h2 {
+  margin-top: var(--s8);
+  margin-bottom: var(--s3);
+  font-size: 1.28rem;
+  letter-spacing: -0.02em;
+}
+
+.shell-prose p {
+  color: var(--ink-2);
+  margin-bottom: var(--s3);
+  line-height: 1.65;
+}
+
+.shell-prose p.lede,
+.shell-prose p.fine {
+  color: var(--ink-3);
+}
+
+.shell-prose strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.shell-prose a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.prose-list {
+  margin: 0 0 var(--s4);
+  padding-left: var(--s5);
+  color: var(--ink-2);
+  line-height: 1.65;
+}
+
+.prose-list li {
+  margin-bottom: var(--s2);
+}
+
 /* The light panel the whole page body sits on. */
 .sheet {
   background: var(--canvas);
@@ -886,6 +938,16 @@ h3 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: var(--s4);
+}
+
+/* Privacy and Terms live here on every page: both app stores require a
+   reachable privacy policy URL, and burying it one click deeper than the
+   contact address would be a strange thing to optimise for. */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--s4);
 }
 
